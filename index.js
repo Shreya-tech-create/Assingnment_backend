@@ -25,6 +25,11 @@ app.get("/", (req, res) => {
   res.send("🚀 Backend API is running successfully!");
 });
 
+
+app.get("/favicon.ico", (req, res) => {
+  res.status(204).end(); // No Content
+});
+
 app.use("/api/user", userRoute);
 app.use("/api", taskRoute);
 
