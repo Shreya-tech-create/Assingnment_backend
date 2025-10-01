@@ -14,6 +14,7 @@ app.use(cookieParser());
 // Allowed origins
 const allowedOrigins = [
   "https://assingnment-frontend-ujtl.vercel.app",
+    "https://assingnment-frontend-heul.vercel.app",
   "http://localhost:3000"
 ];
 
