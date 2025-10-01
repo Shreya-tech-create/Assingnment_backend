@@ -15,7 +15,7 @@ app.use(cookieParser());
 // Enable CORS
 app.use(
   cors({
-    origin: "http://localhost:3000", // React ka port
+    origin: "https://assingnment-frontend-ujtl.vercel.app/", // React ka port
     credentials: true                // cookies allow karne ke liye
   })
 );
