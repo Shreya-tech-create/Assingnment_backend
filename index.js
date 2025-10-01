@@ -30,6 +30,8 @@ app.get("/favicon.ico", (req, res) => {
   res.status(204).end(); // No Content
 });
 
+app.get("/favicon.ico", (req, res) => res.status(204).end());
+
 app.use("/api/user", userRoute);
 app.use("/api", taskRoute);
 
