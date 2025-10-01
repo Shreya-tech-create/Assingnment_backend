@@ -6,48 +6,40 @@ import taskRoute from './route/taskRoute.js';
 import cookieParser from 'cookie-parser';
 
 const app = express();
-const Port = process.env.PORT || 8000;
 
 // middleware
 app.use(express.json());
 app.use(cookieParser());
 
-// Allowed origins array - apne frontend ke URLs yahan add kar sakte ho
+// Allowed origins
 const allowedOrigins = [
   "https://assingnment-frontend-ujtl.vercel.app",
   "http://localhost:3000"
 ];
 
-// Enable CORS with dynamic origin check
-app.use(
-  cors({
-    origin: function(origin, callback) {
-      // origin can be undefined in case of tools like Postman
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
-        return callback(new Error(msg), false);
-      }
+// Enable CORS
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
       return callback(null, true);
-    },
-    credentials: true,
-  })
-);
+    }
+    callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
+}));
 
-// Root route (GET /)
+// Routes
 app.get("/", (req, res) => {
   res.send("🚀 Backend API is running successfully!");
 });
 
-app.get("/favicon.ico", (req, res) => {
-  res.status(204).end(); // No Content
-});
+app.get("/favicon.ico", (req, res) => res.status(204).end());
 
 app.use("/api/user", userRoute);
 app.use("/api", taskRoute);
 
-db().then(() => {
-  app.listen(Port, () => {
-    console.log(`✅ Server is Started on port ${Port}`);
-  });
-});
+// Connect DB
+db();
+
+// ✅ Instead of app.listen
+export default app;
